@@ -41,8 +41,11 @@ There is NO WARRANTY, to the extent permitted by law.
 Written by Benoît Legat.'''.format(program_name, version))
 
 class Digraph:
-  def __init__(self, file_name, graph_name):
-    self.f = open(file_name, "w")
+  def __init__(self, graph_name, file_name=None):
+    if not file_name:
+        self.f = sys.stdout
+    else:
+        self.f = open(file_name, "w")
     self.f.write('digraph "{}" {{\n'.format(graph_name))
 
   def write_node(self, name, color, fillcolor, label):
@@ -78,8 +81,8 @@ def get_refs(name):
       cut_sha(get_content(os.path.join(folder, ref)))))
   return dic
 
-def create_graph(file_name):
-  graph = Digraph(file_name, "git history")
+def create_graph(file_name=None):
+  graph = Digraph("git history", file_name=file_name)
 
   # Branches
   for branch, sha in get_refs("heads"):
@@ -139,11 +142,10 @@ def main():
     else:
       assert False, "unhandled option"
 
-  if not args:
-    print_err("Missing output file")
-    exit(-1)
-
-  create_graph(args[0])
+  if args:
+    create_graph(args[0])
+  else:
+    create_graph()
 
 if __name__ == "__main__":
     main()

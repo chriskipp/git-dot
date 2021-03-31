@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import sys
@@ -20,8 +20,7 @@ setup(name='smartcp',
     'PyYAML',
     ],
   py_modules=['git-dot', '__version__'],
-  entry_points=dict(console_scripts=['git-dot=git-dot:main',
-    'git-dot-%s=git-dot:main' % sys.version[:3]]),
+  scripts=['git-dot'],
   classifiers = [
     'Development Status :: 4 - Beta',
     'Environment :: Console',
